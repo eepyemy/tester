@@ -10,3 +10,5 @@
 #define putchar custom_putchar
 
 #endif
+
+int	ft_a(int c);
