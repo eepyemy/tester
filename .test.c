@@ -6,7 +6,7 @@
 /*   By: emkulpa <emkulpa@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 15:29:39 by emkulpa           #+#    #+#             */
-/*   Updated: 2025/10/23 20:46:42 by emkulpa          ###   ########.fr       */
+/*   Updated: 2025/10/24 15:03:57 by emkulpa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,56 +36,94 @@
 #define DEFAULT "\033[0m"
 #define CHECKMARK "\xE2\x9C\x93"
 
-#define FOR_EACH_0(up, down)
-#define FOR_EACH_1(up, down, x) up(down(x)); 
-#define FOR_EACH_2(up, down, x, ...) up(down(x));FOR_EACH_1(up, down, __VA_ARGS__)
-#define FOR_EACH_3(up, down, x, ...) up(down(x));FOR_EACH_2(up, down, __VA_ARGS__)
-#define FOR_EACH_4(up, down, x, ...) up(down(x));FOR_EACH_3(up, down, __VA_ARGS__)
-#define FOR_EACH_5(up, down, x, ...) up(down(x));FOR_EACH_4(up, down, __VA_ARGS__)
-#define FOR_EACH_6(up, down, x, ...) up(down(x));FOR_EACH_5(up, down, __VA_ARGS__)
-#define FOR_EACH_7(up, down, x, ...) up(down(x));FOR_EACH_6(up, down, __VA_ARGS__)
-#define FOR_EACH_8(up, down, x, ...) up(down(x));FOR_EACH_7(up, down, __VA_ARGS__)
-#define FOR_EACH_9(up, down, x, ...) up(down(x));FOR_EACH_8(up, down, __VA_ARGS__)
+#define FOR_EACH_0(wrap, func)
+#define FOR_EACH_1(wrap, func, x) wrap(func(x)); 
+#define FOR_EACH_2(wrap, func, x, ...) wrap(func(x));FOR_EACH_1(wrap, func, __VA_ARGS__)
+#define FOR_EACH_3(wrap, func, x, ...) wrap(func(x));FOR_EACH_2(wrap, func, __VA_ARGS__)
+#define FOR_EACH_4(wrap, func, x, ...) wrap(func(x));FOR_EACH_3(wrap, func, __VA_ARGS__)
+#define FOR_EACH_5(wrap, func, x, ...) wrap(func(x));FOR_EACH_4(wrap, func, __VA_ARGS__)
+#define FOR_EACH_6(wrap, func, x, ...) wrap(func(x));FOR_EACH_5(wrap, func, __VA_ARGS__)
+#define FOR_EACH_7(wrap, func, x, ...) wrap(func(x));FOR_EACH_6(wrap, func, __VA_ARGS__)
+#define FOR_EACH_8(wrap, func, x, ...) wrap(func(x));FOR_EACH_7(wrap, func, __VA_ARGS__)
+#define FOR_EACH_9(wrap, func, x, ...) wrap(func(x));FOR_EACH_8(wrap, func, __VA_ARGS__)
 
-#define FOR_EACH_MULTI_0(up, down)
-#define FOR_EACH_MULTI_1(up, down, x) up(down##x); 
-#define FOR_EACH_MULTI_2(up, down, x, ...) up(down##x);FOR_EACH_MULTI_1(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_3(up, down, x, ...) up(down##x);FOR_EACH_MULTI_2(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_4(up, down, x, ...) up(down##x);FOR_EACH_MULTI_3(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_5(up, down, x, ...) up(down##x);FOR_EACH_MULTI_4(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_6(up, down, x, ...) up(down##x);FOR_EACH_MULTI_5(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_7(up, down, x, ...) up(down##x);FOR_EACH_MULTI_6(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_8(up, down, x, ...) up(down##x);FOR_EACH_MULTI_7(up, down, __VA_ARGS__)
-#define FOR_EACH_MULTI_9(up, down, x, ...) up(down##x);FOR_EACH_MULTI_8(up, down, __VA_ARGS__)
+#define COUNT_ARGS_(_20,_19,_18,_17,_16,_15,_14,_13,_12,_11,_10,_9,_8,_7,_6,_5,_4,_3,_2,_1,N,...) N
+#define COUNT_ARGS(...) COUNT_ARGS_(__VA_ARGS__ __VA_OPT__(,) 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
+#define FOR_EACH_MULTI_0(wrap, func)
+#define FOR_EACH_MULTI_1(wrap, func, x) wrap(func x); 
+#define FOR_EACH_MULTI_2(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_1(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_3(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_2(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_4(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_3(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_5(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_4(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_6(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_5(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_7(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_6(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_8(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_7(wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI_9(wrap, func, x, ...) wrap(func x);FOR_EACH_MULTI_8(wrap, func, __VA_ARGS__)
+
+#define FOR_EACH_ASSERT_0(assertf, func1, func2, cmpf)
+#define FOR_EACH_ASSERT_1(assertf, func1, func2, cmpf, x) assertf(func1(x), func2(x), cmpf); 
+#define FOR_EACH_ASSERT_2(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_1(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_3(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_2(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_4(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_3(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_5(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_4(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_6(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_5(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_7(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_6(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_8(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_7(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_9(assertf, func1, func2, cmpf, x, ...) assertf(func1(x), func2(x), cmpf);FOR_EACH_ASSERT_8(assertf, func1, func2, cmpf, __VA_ARGS__)
+
+#define FOR_EACH_ASSERT_MULTI_0(assertf, func1, func2, cmpf)
+#define FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, cmpf, x) assertf(func1 x, func2 x, cmpf); 
+#define FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI_9(assertf, func1, func2, cmpf, x, ...) assertf(func1 x, func2 x, cmpf);FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, cmpf, __VA_ARGS__)
+
+#define FE__(fe_name, n, wrap, func, ...) FE_(fe_name, n, wrap, func, __VA_ARGS__)
+#define FE_(fe_name, n, wrap, func, ...) fe_name##n(wrap, func, __VA_ARGS__)
+#define FOR_EACH(wrap, func, ...) FE__(FOR_EACH_, COUNT_ARGS(__VA_ARGS__), wrap, func, __VA_ARGS__)
+#define FOR_EACH_MULTI(wrap, func, ...) FE__(FOR_EACH_MULTI_, COUNT_ARGS(__VA_ARGS__), wrap, func, __VA_ARGS__)
+
+#define FEA_(fe_name, n, assertf, func1, func2, cmpf, ...) fe_name##n(assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FEA__(fe_name, n, assertf, func1, func2, cmpf, ...) FEA_(fe_name, n, assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT(assertf, func1, func2, cmpf, ...) FEA__(FOR_EACH_ASSERT_, COUNT_ARGS(__VA_ARGS__), assertf, func1, func2, cmpf, __VA_ARGS__)
+#define FOR_EACH_ASSERT_MULTI(assertf, func1, func2, cmpf, ...) FE__(FOR_EACH_ASSERT_MULTI_, COUNT_ARGS(__VA_ARGS__), assertf, func1, func2, cmpf, __VA_ARGS__)
 // test macros
 #define TO_STR(x) #x
 #define CMP_FLAT(x, y) ((x != 0) && (y != 0)) || ((x == 0) && (y == 0)) ? 1 : 0
 #define assert(x) assert_with_message(x, #x)
-#define assert_ctypeis(x) assert_with_message(CMP_FLAT(x, ft_##x), TO_STR(ft_##x == _##x))
-#define assert_ctypeismore(x) assert_cmp_with_message(ft_##x, x, TO_STR(ft_##x), TO_STR(_##x), cmp_flat)
-#define assert_ctype(x) assert_cmp_with_message(ft_##x, x, TO_STR(ft_##x), TO_STR(_##x), cmp)
-#define assert_mem(x)
+#define assert_expressions(exp1, exp2, cmpf) cmp_with_msg(exp1, exp2, TO_STR(exp1), TO_STR(_##exp2), cmpf)
 #define announce(x, ident) printf(YELLOW "\n" ident "%s" DEFAULT, #x); x
 #define header_message(x) printf(PINK "\n\n[%s]" DEFAULT, x)
 #define memprint(start, n) announce(_memprint(start, n), " ")
 #define _memprint(start, n) memprint_indent(start, " ", n)
 #define memprint_char(start, n) announce(_memprint_char(start, n), " ")
 #define _memprint_char(start, n) memprint_char_indent(start, " ", n)
-#define test_is(func, n, ...) \
-header_message(TO_STR(ft_##func)); \
-FOR_EACH_##n(assert_ctypeismore, func, __VA_ARGS__);
 
-#define test(func, n, ...) \
+#define TEST(wrap, func, ...) \
 header_message(TO_STR(ft_##func)); \
-FOR_EACH_##n(assert_ctype, func, __VA_ARGS__);
+FOR_EACH(assert_ctypeismore, func, __VA_ARGS__);
 
-#define test_multi(func, n, ...) \
+#define TEST_MULTI(wrap, func, ...) \
 header_message(TO_STR(ft_##func)); \
-FOR_EACH_MULTI_##n(assert_ctype, func, __VA_ARGS__);
+FOR_EACH_MULTI(assert_ctypeismore, func, __VA_ARGS__);
 
-int	cmp_flat(int arg1, int arg2) { return CMP_FLAT(arg1, arg2); }
-int cmp(int x, int y) { return x == y; }
+#define TEST_CMP(assertf, func1, func2, cmpf, ...) \
+header_message(TO_STR(func2)); \
+FOR_EACH_ASSERT(assertf, func1, func2, cmpf, __VA_ARGS__);
+
+#define TEST_CMP_MULTI(assertf, func1, func2, cmpf, ...) \
+header_message(TO_STR(func2)); \
+FOR_EACH_ASSERT_MULTI(assertf, func1, func2, cmpf, __VA_ARGS__);
+// multi, test -> ctype
+// is -> assert ctypeismore
+
+int	cmp_flat(size_t arg1, size_t arg2) { return CMP_FLAT(arg1, arg2); }
+int cmp(size_t x, size_t y) { return x == y; }
 void	assert_with_message(int expression, const char *message)
 {
 	printf("\n");
@@ -95,19 +133,21 @@ void	assert_with_message(int expression, const char *message)
 		printf(RED BG_YELLOW " [KO]" BG_RED);
 	printf(YELLOW "  %s" DEFAULT, message);
 }
-void	assert_cmp_with_message(int	arg1, int arg2,  
-	const char *arg1_msg,  
-	const char *arg2_msg, int (*cmp)(int, int))
+void	cmp_with_msg(size_t	exp1, size_t exp2,  
+	const char *exp1_msg,  
+	const char *exp2_msg, int (*cmp)(size_t, size_t))
 {
 	printf("\n");
-	if (cmp(arg1, arg2))
+	if (cmp(exp1, exp2))
 		printf(GREEN " [OK]");
 	else
 		printf(RED BG_YELLOW " [KO]" BG_RED);
-	printf(YELLOW "  %s == %s" DEFAULT, arg1_msg, arg2_msg);
-	if (!cmp(arg1, arg2))
-		printf("\n" YELLOW BG_RED "         %s = %d" DEFAULT "\n" YELLOW BG_RED "         %s = %d" DEFAULT, arg1_msg, arg1, arg2_msg, arg2);
+	printf(YELLOW "  %s == %s" DEFAULT, exp1_msg, exp2_msg);
+	if (!cmp(exp1, exp2))
+		printf("\n" YELLOW BG_RED "         %s = %d" DEFAULT "\n" YELLOW BG_RED "         %s = %d" DEFAULT, exp1_msg, (int) exp1, exp2_msg, (int) exp2);
 }
+
+int	false_func(int x) { return (x++,0); }
 
 void	memprint_indent(void *start, const char* indent, t_size n)
 {
@@ -139,32 +179,38 @@ void	memprint_char_indent(void *start, const char* indent, t_size n)
 
 void	test_ft_isalpha(void)
 {
-	test_is(isalpha, 9, 'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', 'j');
+	TEST_CMP(assert_expressions, ft_isalpha, isalpha, cmp_flat, 
+		'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', 'j');
 }
 
 void	test_ft_isdigit(void)
 {
-	test_is(isdigit, 9, 'a', 'b', 'c', '9', '0', '\n', '2', '-', 97);
+	TEST_CMP(assert_expressions, ft_isdigit, isdigit, cmp_flat, 
+		'a', 'b', 'c', '9', '0', '\n', '2', '-', 97);
 }
 
 void	test_ft_isalnum(void)
 {
-	test_is(isalnum, 9, 'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', '\t');
+	TEST_CMP(assert_expressions, ft_isalnum, isalnum, cmp_flat, 
+		'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', '\t');
 }
 
 void	test_ft_isascii(void)
 {
-	test_is(isascii, 9, -1, 128, 'A', 'Z', 'z', '\n', '\t', '9', '\t');
+	TEST_CMP(assert_expressions, ft_isascii, isascii, cmp_flat, 
+		-1, 128, 'A', 'Z', 'z', '\n', '\t', '9', '\t');
 }
 
 void	test_ft_isprint(void)
 {
-	test_is(isprint, 9, -1, 127, ' ', 'Z', 'z', '\n', '\t', '9', 31);
+	TEST_CMP(assert_expressions, ft_isprint, isprint, cmp_flat, 
+		-1, 127, ' ', 'Z', 'z', '\n', '\t', '9', 31);
 }
 
 void	test_ft_strlen(void)
 {
-	test(strlen, 9, "25", "", "12345", "abc", 
+	TEST_CMP(assert_expressions, ft_strlen, strlen, cmp, 
+		"25", "", "12345", "abc", 
 		"123\0\t1234", 
 		"abcdrewffsasfafadsdsaf", 
 		"adfsdfasdfasdfas", "ads", "ads");
@@ -366,12 +412,12 @@ void	test_ft_strlcat(void)
 
 void	test_ft_toupper(void)
 {
-	test(toupper, 6, 'a', 'b', 'z', 'A', 'Z', ' ')
+	TEST_CMP(assert_expressions, ft_toupper, toupper, cmp, 'a', 'b', 'z', 'A', 'Z', ' ')
 }
 
 void	test_ft_tolower(void)
 {
-	test(tolower, 6, 'a', 'b', 'z', 'A', 'Z', ' ')
+	TEST_CMP(assert_expressions, ft_tolower, tolower, cmp, 'a', 'b', 'z', 'A', 'Z', ' ')
 }
 
 void	test_ft_strchr(void)
@@ -386,7 +432,8 @@ void	test_ft_strrchr(void)
 
 void	test_ft_strncmp(void)
 {
-	test_multi(strncmp, 2, ("abc", "abcd", 3), ("", "abc", 4));	
+	TEST_CMP_MULTI(assert_expressions, ft_strncmp, strncmp, cmp, 
+		("abc", "abcd", 3), ("", "abc", 4));	
 }
 
 void	test_ft_memchr(void)
