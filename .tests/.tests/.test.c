@@ -6,11 +6,11 @@
 /*   By: emkulpa <emkulpa@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 15:29:39 by emkulpa           #+#    #+#             */
-/*   Updated: 2025/10/27 01:07:46 by emkulpa          ###   ########.fr       */
+/*   Updated: 2025/10/29 17:25:50 by emkulpa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <bsd/string.h>
@@ -41,29 +41,31 @@
 
 // test macros
 #define TO_STR(x) #x
-#define CMP_FLAT(x, y) ((x != 0) && (y != 0)) || ((x == 0) && (y == 0)) ? 1 : 0
+#define CMP_FLAT(x, y) (((x != 0) && (y != 0)) || ((x == 0) && (y == 0)) )? 1 : 0
+#define CMP_FLAT_SIGNED(x, y) (((x > 0) && (y > 0)) || ((x == 0) && (y == 0)) || ((x < 0) && (y < 0)) ) ? 1 : 0
 #define assert(x) assert_with_message(x, #x)
 #define assert_expressions(exp1, exp2, cmpf) cmp_with_msg(exp1, exp2, TO_STR(exp1), TO_STR(_##exp2), cmpf)
+#define assert_expressions_int(exp1, exp2, cmpf) cmp_with_msg_int(exp1, exp2, TO_STR(exp1), TO_STR(_##exp2), cmpf)
 #define announce(x, ident) if (!SHORT) printf(YELLOW "\n" ident "%s" DEFAULT, #x); x
 #define header_message(x) printf(PINK "\n\n[%s]" DEFAULT, x)
 
-#define TEST(wrap, func1, func2, ...) \
+#define TESTS(print_func, func1, func2, poly_cmp, ...) \
 header_message(TO_STR(func1)); \
-FOR_EACH(assert, func1, func2, __VA_ARGS__);
+FOR_EACH(print_func, func1, func2, poly_cmp, __VA_ARGS__);
 
-#define TEST_MULTI(wrap, func1, func2, ...) \
+#define TESTS_MULTI(print_func, func1, func2, poly_cmp, ...) \
 header_message(TO_STR(func1)); \
-FOR_EACH_MULTI(assert, func1, func2, __VA_ARGS__);
+FOR_EACH_MULTI(print_func, func1, func2, poly_cmp, __VA_ARGS__);
 
-#define TEST_CMP(result_assert, func1, func2, result_cmp, ...) \
+#define TESTS_CMP(result_assert, func1, func2, result_cmp, ...) \
 header_message(TO_STR(func1)); \
 FOR_EACH_ASSERT(result_assert, func1, func2, result_cmp, __VA_ARGS__);
 
-#define TEST_CMP_MULTI(result_assert, func1, func2, result_cmp, ...) \
+#define TESTS_CMP_MULTI(result_assert, func1, func2, result_cmp, ...) \
 header_message(TO_STR(func1)); \
 FOR_EACH_ASSERT_MULTI(result_assert, func1, func2, result_cmp, __VA_ARGS__);
 
-#define TEST_MEM(result_assert, func1, func2, result_cmp, memassert, narg_pointer, ...) \
+#define TESTS_MEM(result_assert, func1, func2, result_cmp, memassert, narg_pointer, ...) \
 header_message(TO_STR(func1)); \
 FOR_EACH_ASSERT_MEM_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__);
 // multi, test -> ctype
@@ -73,6 +75,7 @@ FOR_EACH_ASSERT_MEM_MULTI(result_assert, func1, func2, result_cmp, memassert, na
 #include <unistd.h>
 
 int	cmp_flat(size_t arg1, size_t arg2) { return CMP_FLAT(arg1, arg2); }
+int cmp_flat_signed(int arg1, int arg2) { return CMP_FLAT_SIGNED(arg1, arg2); }
 int cmp(size_t x, size_t y) { return x == y; }
 
 int	assert_with_message(int expression, const char *message)
@@ -98,9 +101,10 @@ void	cmp_with_msg(size_t	exp1, size_t exp2,
 {
 	fflush(stdout);
 	usleep(SLEEP_TIME);
+	int _r = cmp(exp1, exp2);
 	if (!SHORT)
 		printf("\n");
-	if (cmp(exp1, exp2))
+	if (_r)
 		printf(GREEN " [OK]");
 	else
 		printf(RED BG_YELLOW " [KO]" BG_DARK_RED);
@@ -108,21 +112,51 @@ void	cmp_with_msg(size_t	exp1, size_t exp2,
 		printf(YELLOW "  %s == %s" DEFAULT, exp1_msg, exp2_msg);
 	else
 		printf(DEFAULT);
-	if (!cmp(exp1, exp2) && !SHORT)
-		printf("\n" YELLOW BG_DARK_RED "         %s = %d" DEFAULT 
-			"\n" YELLOW BG_DARK_RED "         %s = %d" DEFAULT, 
+	if (!_r && !SHORT)
+		printf("\n" YELLOW BG_DARK_RED "        ╰%s = %d" DEFAULT 
+			"\n" YELLOW BG_DARK_RED "        ╰%s = %d" DEFAULT, 
 			exp1_msg, (int) exp1, 
 			exp2_msg, (int) exp2);
-	if (VERBOSE && !SHORT && cmp(exp1, exp2))
-		printf("\n" GREEN "         %s = %d" DEFAULT 
-			"\n" GREEN "         %s = %d" DEFAULT, 
+	if (VERBOSE && !SHORT && _r)
+		printf("\n" GREEN "        ╰%s = %d" DEFAULT 
+			"\n" GREEN "        ╰%s = %d" DEFAULT, 
 			exp1_msg, (int) exp1, 
 			exp2_msg, (int) exp2);
 }
 
-void	memprint_indent(void *start, const char* indent, t_size n)
+void	cmp_with_msg_int(int exp1, int exp2,  
+	const char *exp1_msg,  
+	const char *exp2_msg, int (*cmp)(int , int))
 {
-	t_size	i;
+	fflush(stdout);
+	usleep(SLEEP_TIME);
+	int _r = cmp(exp1, exp2);
+	if (!SHORT)
+		printf("\n");
+	if (_r)
+		printf(GREEN " [OK]");
+	else
+		printf(RED BG_YELLOW " [KO]" BG_DARK_RED);
+	if (!SHORT)
+		printf(YELLOW "  %s == %s" DEFAULT, exp1_msg, exp2_msg);
+	else
+		printf(DEFAULT);
+	if (!_r && !SHORT)
+		printf("\n" YELLOW BG_DARK_RED "        ╰%s = %d" DEFAULT 
+			"\n" YELLOW BG_DARK_RED "        ╰%s = %d" DEFAULT, 
+			exp1_msg, (int) exp1, 
+			exp2_msg, (int) exp2);
+	if (VERBOSE && !SHORT && _r)
+		printf("\n" GREEN "        ╰%s = %d" DEFAULT 
+			"\n" GREEN "        ╰%s = %d" DEFAULT, 
+			exp1_msg, (int) exp1, 
+			exp2_msg, (int) exp2);
+}
+
+
+void	memprint_indent(void *start, const char* indent, size_t n)
+{
+	size_t	i;
 
 	i = 0;
 	while (i < n)
@@ -142,9 +176,11 @@ void	cmp_mem_with_msg(void *m1, void *m2, size_t nbytes, const char *exp1_msg,
 	usleep(SLEEP_TIME);
 	char *indent =  WHITE BG_DARK_RED "		";
 	char *info_indent = WHITE "		";
+	int _r = 0;
+	_r = memcmp(m1, m2, nbytes);
 	if (!SHORT)
 		printf("\n");
-	if (memcmp(m1, m2, nbytes) == 0)
+	if (_r == 0)
 		printf(GREEN " [OK]");
 	else
 		printf(RED BG_YELLOW " [KO]" BG_DARK_RED);
@@ -152,18 +188,18 @@ void	cmp_mem_with_msg(void *m1, void *m2, size_t nbytes, const char *exp1_msg,
 		printf(YELLOW "  [MEM]%s == %s" DEFAULT, exp1_msg, exp2_msg);
 	else
 		printf(DEFAULT);
-	if (memcmp(m1, m2, nbytes) != 0 && !SHORT)
+	if (_r != 0 && !SHORT)
 	{
-		printf("\n" YELLOW BG_DARK_RED "         %s :" DEFAULT, exp1_msg);
+		printf("\n" YELLOW BG_DARK_RED "        ╰%s :" DEFAULT, exp1_msg);
 		memprint_indent(m1, indent, nbytes);
-		printf("\n" YELLOW BG_DARK_RED "         %s :" DEFAULT, exp2_msg);
+		printf("\n" YELLOW BG_DARK_RED "        ╰%s :" DEFAULT, exp2_msg);
 		memprint_indent(m2, indent, nbytes);
 	}
-	if (memcmp(m1, m2, nbytes) == 0 && VERBOSE && !SHORT)
+	if (_r == 0 && VERBOSE && !SHORT)
 	{
-		printf("\n" GREEN "         %s :" DEFAULT, exp1_msg);
+		printf("\n" GREEN "        ╰%s :" DEFAULT, exp1_msg);
 		memprint_indent(m1, info_indent, nbytes);
-		printf("\n" GREEN "         %s :" DEFAULT, exp2_msg);
+		printf("\n" GREEN "        ╰%s :" DEFAULT, exp2_msg);
 		memprint_indent(m2, info_indent, nbytes);
 	}
 }
@@ -173,37 +209,37 @@ int	false_func(int x) { return (x++,0); }
 
 void	test_ft_isalpha(void)
 {
-	TEST_CMP(assert_expressions, ft_isalpha, isalpha, cmp_flat, 
+	TESTS(assert, ft_isalpha, isalpha, EQ_FLAT, 
 		'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', 'j');
 }
 
 void	test_ft_isdigit(void)
 {
-	TEST_CMP(assert_expressions, ft_isdigit, isdigit, cmp_flat, 
+	TESTS(assert, ft_isdigit, isdigit, EQ_FLAT, 
 		'a', 'b', 'c', '9', '0', '\n', '2', '-', 97);
 }
 
 void	test_ft_isalnum(void)
 {
-	TEST_CMP(assert_expressions, ft_isalnum, isalnum, cmp_flat, 
+	TESTS(assert, ft_isalnum, isalnum, EQ_FLAT, 
 		'b', '\123', 'A', 'Z', 'z', '\n', '\t', '9', '\t');
 }
 
 void	test_ft_isascii(void)
 {
-	TEST_CMP(assert_expressions, ft_isascii, isascii, cmp_flat, 
+	TESTS(assert, ft_isascii, isascii, EQ_FLAT, 
 		-1, 128, 'A', 'Z', 'z', '\n', '\t', '9', '\t');
 }
 
 void	test_ft_isprint(void)
 {
-	TEST_CMP(assert_expressions, ft_isprint, isprint, cmp_flat, 
+	TESTS(assert, ft_isprint, isprint, EQ_FLAT, 
 		-1, 127, ' ', 'Z', 'z', '\n', '\t', '9', 31);
 }
 
 void	test_ft_strlen(void)
 {
-	TEST_CMP(assert_expressions, ft_strlen, strlen, cmp, 
+	TESTS(assert, ft_strlen, strlen, EQ, 
 		"25", "", "12345", "abc", 
 		"123\0\t1234", 
 		"abcdrewffsasfafadsdsaf", 
@@ -226,7 +262,8 @@ void	test_ft_memset(void)
 	char m9[2] = "1";
 	char m10[2] = "1";
 
-	TEST_MEM(dummy_assert, ft_memset, memset, cmp, cmp_mem_with_msg, 1,
+	// MEM_ASSERT_MULTI(dummy_assert, ft_memset, memset, cmp, cmp_mem_with_msg, 1, 5, (m1, 8, 1), (m2, 8, 1));
+	TESTS_MEM(dummy_assert, ft_memset, memset, cmp, cmp_mem_with_msg, 1,
 		mem_test_case(5, m1, m2, 8, 1),
 		mem_test_case(9, m3, m4, 1, 3),
 		mem_test_case(4, m5, m6, '\n', 2),
@@ -249,7 +286,7 @@ void	test_ft_bzero(void)
 	char m10[2] = "1";
 
 	//header_message("ft_bzero");
-	TEST_MEM(dummy_assert, ft_bzero, bzero, cmp, cmp_mem_with_msg, 1, 
+	TESTS_MEM(dummy_assert, ft_bzero, bzero, cmp, cmp_mem_with_msg, 1, 
 		mem_test_case(5, m1, m2, 1),
 		mem_test_case(9, m3, m4, 3),
 		mem_test_case(4, m5, m6, 2),
@@ -280,7 +317,7 @@ void	test_ft_memcpy(void)
 	// char *m14 = (void *)0;
 	// char *m15 = (void *)0;
 
-	TEST_MEM(dummy_assert, ft_memcpy, memcpy, cmp, cmp_mem_with_msg, 1, 
+	TESTS_MEM(dummy_assert, ft_memcpy, memcpy, cmp, cmp_mem_with_msg, 1, 
 		mem_test_case(5, m1, m2, tempo, 3),
 		mem_test_case(9, m3, m4, tempo, 5),
 		mem_test_case(4, m5, m6, tempo, 2),
@@ -314,7 +351,7 @@ void	test_ft_memmove(void)
 	src3 = src1 + 5;
 	src4 = src2 + 5;
 
-	TEST_MEM(dummy_assert, ft_memmove, memmove, cmp, cmp_mem_with_msg, 1,
+	TESTS_MEM(dummy_assert, ft_memmove, memmove, cmp, cmp_mem_with_msg, 1,
 		mem_test_case(5, dest1, dest2, src1, 3),
 		mem_test_case(9, dest3, dest4, src1, 5),
 		mem_test_case(4, dest6, dest5, src1, 2),
@@ -338,7 +375,7 @@ void	test_ft_strlcpy(void)
 	// char m8[1] = "";
 	// char m9[2] = "1";
 	// char m10[2] = "1";
-	TEST_MEM(assert_expressions, 
+	TESTS_MEM(POLY_TEST_EXP, 
 		ft_strlcpy, strlcpy, cmp, 
 		cmp_mem_with_msg, 1, 
 		mem_test_case(5, d2, d1, s1, 4),
@@ -349,24 +386,42 @@ void	test_ft_strlcpy(void)
 
 void	test_ft_strlcat(void)
 {
-
+	// char s1[12] = "hello world";
+	// char d1[5] = "\0abc";
+	// char d2[5] = "\0abc";
+	// char d3[9] = "12345678";
+	// char d4[9] = "12345678";
+	// char d5[16] = "123456789abcde";
+	// char d6[16] = "123456789abcde";
+	char d7[16] = "abcd\0o123456789";
+	char d8[16] = "abcd\0o123456789";
+	char d9[16] = "abcd\0o123456789";
+	char d10[16] = "abcd\0o123456789";
+	char d11[16] = "abcd\0o123456789";
+	char d12[16] = "abcd\0o123456789";
+	TESTS_MEM(POLY_TEST_EXP, ft_strlcat, strlcat, EQ, cmp_mem_with_msg, 1,
+		mem_test_case(16, d7, d8, "PPP", 3),
+		mem_test_case(16, d9, d10, "PPP", 5),
+		mem_test_case(16, d11, d12, "PPP", 6),
+		mem_test_case(16, d11, d12, "", 6)
+	);
 }
 
 void	test_ft_toupper(void)
 {
-	TEST_CMP(assert_expressions, ft_toupper, toupper, cmp, 
-		'a', 'b', 'z', 'A', 'Z', ' ')
+	TESTS(assert, ft_toupper, toupper, EQ, 
+		'a', 'b', 'z', 'A', 'Z', ' ');
 }
 
 void	test_ft_tolower(void)
 {
-	TEST_CMP(assert_expressions, ft_tolower, tolower, cmp, 
+	TESTS(assert, ft_tolower, tolower, EQ, 
 		'a', 'b', 'z', 'A', 'Z', ' ')
 }
 
 void	test_ft_strchr(void)
 {
-	TEST_MULTI(assert, ft_strchr, strchr, 
+	TESTS_MULTI(assert, ft_strchr, strchr, EQ,
 		("abc", 'c'),
 		("abcd", 'e'),
 		("", '1'),
@@ -378,7 +433,7 @@ void	test_ft_strchr(void)
 
 void	test_ft_strrchr(void)
 {
-	TEST_MULTI(assert, ft_strrchr, strrchr, 
+	TESTS_MULTI(assert, ft_strrchr, strrchr, EQ,
 		("cacbc", 'c'),
 		("abcd", 'e'),
 		("", '1'),
@@ -390,7 +445,7 @@ void	test_ft_strrchr(void)
 
 void	test_ft_strncmp(void)
 {
-	TEST_CMP_MULTI(assert_expressions, ft_strncmp, strncmp, cmp, 
+	TESTS_MULTI(assert, ft_strncmp, strncmp, EQ, 
 		("abc", "abcd", 3), 
 		("", "abc", 4),
 		("abc", "", 3),
@@ -405,7 +460,7 @@ void	test_ft_strncmp(void)
 
 void	test_ft_memchr(void)
 {
-	TEST_MULTI(assert, ft_memchr, memchr, 
+	TESTS_MULTI(assert, ft_memchr, memchr, EQ,
 		("acbc", 'c', 2),
 		("abcd", 'e', 0),
 		("", '1', 1),
@@ -424,20 +479,21 @@ void	test_ft_memcmp(void)
 	*x = 15;
 	*y = 3;
 	
-	TEST_CMP_MULTI(assert_expressions, ft_memcmp, memcmp, cmp, 
-		("abc", "abd", 2),
-		("abc", "abd", 3),
+	TESTS_MULTI(assert, ft_memcmp, memcmp, EQ_FLAT_SIGNED, 
+		("abc", "abe", 2),
+		("abc", "abe", 3),
 		("", "abd", 1),
 		("", "", 1),
 		("", "", 0),
 		(x, y, 3)
 	);
 	free(x); free(y);
+	
 }
 
 void	test_ft_strnstr(void)
 {
-	TEST_MULTI(assert, ft_strnstr, strnstr,
+	TESTS_MULTI(assert, ft_strnstr, strnstr, EQ,
 		("abcdefg", "cde", 3),
 		("abcdefg", "cde", 4),
 		("abcdefg", "cde", 5),
@@ -465,11 +521,10 @@ void	test_ft_strnstr(void)
 	// 	printf("\nft_strnstr: %p", ft_strnstr("", "", 0));
 	// }
 }
-#include <limits.h>
 
 void	test_ft_atoi(void)
 {
-	TEST_CMP(assert_expressions, ft_atoi, atoi, cmp, 
+	TESTS(assert, ft_atoi, atoi, EQ, 
 		"abc", "000001234", "12345", "-123", 
 		"2147483647asd", "     -2147483648", "",
 		"d1234", "\v\f\t \n \t \r\r\r -42", 
@@ -535,7 +590,6 @@ int	main(int argc, char *argv[])
 	i = 1;
 	while(i <= argc - 1)
 	{
-
 		test_func(argv[i]);
 		i++;
 	}

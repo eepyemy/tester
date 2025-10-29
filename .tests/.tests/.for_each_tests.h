@@ -1,163 +1,228 @@
-
-#define PRINTF_FORMAT(T)        \
+#include "stdlib.h"
+#define PRINTF_FORMAT_OK(T)        \
   _Generic( (T),                \
-    _Bool             : "\n\033[38;5;207m          %s = %d \033[0m",   \
-    char              : "\n\033[38;5;207m          %s = %c \033[0m",   \
-    signed char       : "\n\033[38;5;207m          %s = %hhd \033[0m", \
-    unsigned char     : "\n\033[38;5;207m          %s = %hhu \033[0m", \
-    short             : "\n\033[38;5;207m          %s = %hd \033[0m",  \
-    int               : "\n\033[38;5;207m          %s = %d \033[0m",   \
-    long              : "\n\033[38;5;207m          %s = %ld \033[0m",  \
-    long long         : "\n\033[38;5;207m          %s = %lld \033[0m", \
-    unsigned short    : "\n\033[38;5;207m          %s = %hu \033[0m",  \
-    unsigned int      : "\n\033[38;5;207m          %s = %u \033[0m",   \
-    unsigned long     : "\n\033[38;5;207m          %s = %lu \033[0m",  \
-    unsigned long long: "\n\033[38;5;207m          %s = %llu \033[0m", \
-    float             : "\n\033[38;5;207m          %s = %f \033[0m",   \
-    double            : "\n\033[38;5;207m          %s = %f \033[0m",   \
-    long double       : "\n\033[38;5;207m          %s = %Lf \033[0m",  \
-    char*             : "\n\033[38;5;207m          %s = %p \033[0m",   \
-    char const*       : "\n\033[38;5;207m          %s = %s \033[0m",   \
-    wchar_t*          : "\n\033[38;5;207m          %s = %ls \033[0m",  \
-    wchar_t const*    : "\n\033[38;5;207m          %s = %ls \033[0m",  \
-    void*             : "\n\033[38;5;207m          %s = %p \033[0m",   \
-    void const*       : "\n\033[38;5;207m          %s = %p \033[0m"    \
+    _Bool             : "\n\033[38;5;84m        %s = %d \033[0m",   \
+    char              : "\n\033[38;5;84m        %s = %c \033[0m",   \
+    signed char       : "\n\033[38;5;84m        %s = %hhd \033[0m", \
+    unsigned char     : "\n\033[38;5;84m        %s = %hhu \033[0m", \
+    short             : "\n\033[38;5;84m        %s = %hd \033[0m",  \
+    int               : "\n\033[38;5;84m        %s = %d \033[0m",   \
+    long              : "\n\033[38;5;84m        %s = %ld \033[0m",  \
+    long long         : "\n\033[38;5;84m        %s = %lld \033[0m", \
+    unsigned short    : "\n\033[38;5;84m        %s = %hu \033[0m",  \
+    unsigned int      : "\n\033[38;5;84m        %s = %u \033[0m",   \
+    unsigned long     : "\n\033[38;5;84m        %s = %lu \033[0m",  \
+    unsigned long long: "\n\033[38;5;84m        %s = %llu \033[0m", \
+    float             : "\n\033[38;5;84m        %s = %f \033[0m",   \
+    double            : "\n\033[38;5;84m        %s = %f \033[0m",   \
+    long double       : "\n\033[38;5;84m        %s = %Lf \033[0m",  \
+    char*             : "\n\033[38;5;84m        %s = %p \033[0m",   \
+    char const*       : "\n\033[38;5;84m        %s = %s \033[0m",   \
+    wchar_t*          : "\n\033[38;5;84m        %s = %ls \033[0m",  \
+    wchar_t const*    : "\n\033[38;5;84m        %s = %ls \033[0m",  \
+    void*             : "\n\033[38;5;84m        %s = %p \033[0m",   \
+    void const*       : "\n\033[38;5;84m        %s = %p \033[0m"    \
+  )
+#define PRINTF_FORMAT_KO(T)        \
+  _Generic( (T),                \
+    _Bool             : "\n\033[38;5;220m\033[48;5;88m        %s = %d \033[0m",   \
+    char              : "\n\033[38;5;220m\033[48;5;88m        %s = %c \033[0m",   \
+    signed char       : "\n\033[38;5;220m\033[48;5;88m        %s = %hhd \033[0m", \
+    unsigned char     : "\n\033[38;5;220m\033[48;5;88m        %s = %hhu \033[0m", \
+    short             : "\n\033[38;5;220m\033[48;5;88m        %s = %hd \033[0m",  \
+    int               : "\n\033[38;5;220m\033[48;5;88m        %s = %d \033[0m",   \
+    long              : "\n\033[38;5;220m\033[48;5;88m        %s = %ld \033[0m",  \
+    long long         : "\n\033[38;5;220m\033[48;5;88m        %s = %lld \033[0m", \
+    unsigned short    : "\n\033[38;5;220m\033[48;5;88m        %s = %hu \033[0m",  \
+    unsigned int      : "\n\033[38;5;220m\033[48;5;88m        %s = %u \033[0m",   \
+    unsigned long     : "\n\033[38;5;220m\033[48;5;88m        %s = %lu \033[0m",  \
+    unsigned long long: "\n\033[38;5;220m\033[48;5;88m        %s = %llu \033[0m", \
+    float             : "\n\033[38;5;220m\033[48;5;88m        %s = %f \033[0m",   \
+    double            : "\n\033[38;5;220m\033[48;5;88m        %s = %f \033[0m",   \
+    long double       : "\n\033[38;5;220m\033[48;5;88m        %s = %Lf \033[0m",  \
+    char*             : "\n\033[38;5;220m\033[48;5;88m        %s = %p \033[0m",   \
+    char const*       : "\n\033[38;5;220m\033[48;5;88m        %s = %s \033[0m",   \
+    wchar_t*          : "\n\033[38;5;220m\033[48;5;88m        %s = %ls \033[0m",  \
+    wchar_t const*    : "\n\033[38;5;220m\033[48;5;88m        %s = %ls \033[0m",  \
+    void*             : "\n\033[38;5;220m\033[48;5;88m        %s = %p \033[0m",   \
+    void const*       : "\n\033[38;5;220m\033[48;5;88m        %s = %p \033[0m"    \
   )
 
-#define PRINT(X)  printf( PRINTF_FORMAT( (X) ), TO_STR(X), (X) )
+#define PRINT(X, n, success)  if (success == 1) {printf( PRINTF_FORMAT_OK( (X) ), "╰(" n ")", (X) ); } else {printf( PRINTF_FORMAT_KO( (X) ), "╰(" n ")", (X) ); }
 
-#define _FOR_EACH_0(wrap, func1, func2)
-#define _FOR_EACH_1(wrap, func1, func2, x) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; 
-#define _FOR_EACH_2(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_1(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_3(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_2(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_4(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_3(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_5(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_4(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_6(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_5(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_7(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_6(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_8(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_7(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_9(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_8(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_10(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_9(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_11(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_10(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_12(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_11(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_13(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_12(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_14(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_13(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_15(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_14(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_16(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_15(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_17(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_16(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_18(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_17(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_19(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_18(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_20(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_19(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_21(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_20(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_22(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_21(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_23(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_22(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_24(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_23(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_25(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_24(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_26(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_25(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_27(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_26(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_28(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_27(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_29(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_28(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_30(wrap, func1, func2, x, ...) if ((!wrap(func1(x) == func2(x)) || VERBOSE) && !SHORT) {PRINT(func1(x)); PRINT(func2(x));}; _FOR_EACH_29(wrap, func1, func2, __VA_ARGS__)
+#define EQ(x, y) x==y
+#define GREATER(x, y) x>y
+#define EQ_FLAT(x, y) (((x != 0) && (y != 0)) || ((x == 0) && (y == 0)) )? 1 : 0
+#define EQ_FLAT_SIGNED(x, y) (((x > 0) && (y > 0)) || ((x == 0) && (y == 0)) || ((x < 0) && (y < 0)) ) ? 1 : 0
+
+#define POLY_TEST(wrap, func1, func2, poly_eq, x) {\
+	int _r = 0;\
+	if (strcmp(#poly_eq,"EQ") == 0) \
+		_r = wrap(func1(x) == func2(x)); \
+	else \
+		_r = wrap(poly_eq(func1(x), func2(x)));\
+	if (( !_r || VERBOSE) && !SHORT) {\
+		PRINT(func1(x), "1st", _r); PRINT(func2(x), "2nd", _r);}; }
+
+#define POLY_TEST_MULTI(wrap, func1, func2, poly_eq, x) {\
+	int _r = 0;\
+	if (strcmp(#poly_eq,"EQ") == 0) \
+		_r = wrap(func1 x == func2 x); \
+	else \
+		_r = wrap(poly_eq(func1 x, func2 x));\
+	if (( !_r || VERBOSE) && !SHORT) {\
+		PRINT(func1 x, "1st", _r); PRINT(func2 x, "2nd", _r);} }
+
+#define POLY_TEST_EXP(exp1, exp2, poly_eq) {\
+	int _r = 0;\
+	if (strcmp(#poly_eq,"EQ") == 0) \
+		_r = assert(exp1 == exp2); \
+	else \
+		_r = assert(poly_eq(exp1, exp2));\
+	if (( !_r || VERBOSE) && !SHORT) {\
+		PRINT(exp1, "1st", _r); PRINT(exp2, "2nd", _r);} }
+
+#define ASSERT_TEST(assertf, func1, func2, result_cmp, x) assertf(func1(x), func2(x), result_cmp)
+#define ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x) assertf(func1 x, func2 x, result_cmp)
+#define MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y) \
+	if (!SHORT) printf("\n--------------------------------------------");\
+		result_assert(func1 x, func2 y, result_cmp); \
+		memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
+		TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)),\
+		TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y)))
+
+#define _FOR_EACH_0(wrap, func1, func2, poly_eq)
+#define _FOR_EACH_1(wrap, func1, func2, poly_eq, x) POLY_TEST(wrap, func1, func2, poly_eq, x); 
+#define _FOR_EACH_2(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_1(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_3(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_2(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_4(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_3(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_5(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_4(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_6(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_5(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_7(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_6(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_8(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_7(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_9(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_8(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_10(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_9(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_11(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_10(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_12(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_11(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_13(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_12(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_14(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_13(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_15(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_14(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_16(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_15(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_17(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_16(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_18(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_17(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_19(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_18(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_20(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_19(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_21(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_20(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_22(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_21(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_23(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_22(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_24(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_23(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_25(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_24(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_26(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_25(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_27(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_26(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_28(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_27(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_29(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_28(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define _FOR_EACH_30(wrap, func1, func2, poly_eq, x, ...) POLY_TEST(wrap, func1, func2, poly_eq, x); _FOR_EACH_29(wrap, func1, func2, poly_eq, __VA_ARGS__)
 
 #define COUNT_ARGS_(_99, _98, _97, _96, _95, _94, _93, _92, _91, _90, _89, _88, _87, _86, _85, _84, _83, _82, _81, _80, _79, _78, _77, _76, _75, _74, _73, _72, _71, _70, _69, _68, _67, _66, _65, _64, _63, _62, _61, _60, _59, _58, _57, _56, _55, _54, _53, _52, _51, _50, _49, _48, _47, _46, _45, _44, _43, _42, _41, _40, _39, _38, _37, _36, _35, _34, _33, _32, _31, _30, _29, _28, _27, _26, _25, _24, _23, _22, _21, _20, _19, _18, _17, _16, _15, _14, _13, _12, _11, _10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
 #define COUNT_ARGS(...) COUNT_ARGS_(__VA_ARGS__ __VA_OPT__(,) 99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
 
 #define _FOR_EACH_MULTI_0(wrap, func1, func2)
-#define _FOR_EACH_MULTI_1(wrap, func1, func2, x) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; 
-#define _FOR_EACH_MULTI_2(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_1(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_3(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_2(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_4(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_3(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_5(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_4(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_6(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_5(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_7(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_6(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_8(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_7(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_9(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_8(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_10(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_9(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_11(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_10(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_12(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_11(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_13(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_12(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_14(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_13(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_15(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_14(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_16(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_15(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_17(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_16(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_18(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_17(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_19(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_18(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_20(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_19(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_21(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_20(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_22(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_21(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_23(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_22(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_24(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_23(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_25(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_24(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_26(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_25(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_27(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_26(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_28(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_27(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_29(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_28(wrap, func1, func2, __VA_ARGS__)
-#define _FOR_EACH_MULTI_30(wrap, func1, func2, x, ...) if ((!(wrap(func1 x == func2 x)) || VERBOSE) && !SHORT ) {PRINT(func1 x); PRINT(func2 x);}; _FOR_EACH_MULTI_29(wrap, func1, func2, __VA_ARGS__)
+#define _FOR_EACH_MULTI_1(wrap, func1, func2, poly_eq,  x) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); 
+#define _FOR_EACH_MULTI_2(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_1(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_3(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_2(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_4(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_3(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_5(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_4(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_6(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_5(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_7(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_6(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_8(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_7(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_9(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_8(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_10(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_9(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_11(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_10(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_12(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_11(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_13(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_12(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_14(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_13(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_15(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_14(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_16(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_15(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_17(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_16(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_18(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_17(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_19(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_18(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_20(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_19(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_21(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_20(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_22(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_21(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_23(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_22(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_24(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_23(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_25(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_24(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_26(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_25(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_27(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_26(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_28(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_27(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_29(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_28(wrap, func1, func2, poly_eq,  __VA_ARGS__)
+#define _FOR_EACH_MULTI_30(wrap, func1, func2, poly_eq,  x, ...) POLY_TEST_MULTI(wrap, func1, func2, poly_eq,  x); _FOR_EACH_MULTI_29(wrap, func1, func2, poly_eq,  __VA_ARGS__)
 
 #define _FOR_EACH_ASSERT_0(assertf, func1, func2, result_cmp)
-#define _FOR_EACH_ASSERT_1(assertf, func1, func2, result_cmp, x) assertf(func1(x), func2(x), result_cmp); 
-#define _FOR_EACH_ASSERT_2(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_1(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_3(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_2(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_4(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_3(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_5(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_4(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_6(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_5(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_7(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_6(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_8(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_7(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_9(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_8(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_10(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_9(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_11(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_10(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_12(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_11(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_13(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_12(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_14(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_13(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_15(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_14(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_16(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_15(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_17(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_16(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_18(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_17(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_19(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_18(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_20(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_19(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_21(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_20(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_22(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_21(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_23(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_22(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_24(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_23(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_25(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_24(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_26(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_25(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_27(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_26(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_28(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_27(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_29(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_28(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_30(assertf, func1, func2, result_cmp, x, ...) assertf(func1(x), func2(x), result_cmp); _FOR_EACH_ASSERT_29(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_1(assertf, func1, func2, result_cmp, x) ASSERT_TEST(assertf, func1, func2, result_cmp, x); 
+#define _FOR_EACH_ASSERT_2(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_1(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_3(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_2(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_4(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_3(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_5(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_4(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_6(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_5(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_7(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_6(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_8(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_7(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_9(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_8(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_10(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_9(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_11(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_10(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_12(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_11(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_13(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_12(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_14(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_13(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_15(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_14(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_16(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_15(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_17(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_16(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_18(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_17(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_19(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_18(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_20(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_19(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_21(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_20(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_22(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_21(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_23(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_22(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_24(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_23(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_25(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_24(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_26(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_25(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_27(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_26(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_28(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_27(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_29(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_28(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_30(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_29(assertf, func1, func2, result_cmp, __VA_ARGS__)
 
 
 #define _FOR_EACH_ASSERT_MULTI_0(assertf, func1, func2, result_cmp)
-#define _FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, result_cmp, x) assertf(func1 x, func2 x, result_cmp); 
-#define _FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_9(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_10(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_9(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_11(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_10(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_12(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_11(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_13(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_12(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_14(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_13(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_15(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_14(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_16(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_15(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_17(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_16(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_18(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_17(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_19(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_18(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_20(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_19(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_21(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_20(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_22(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_21(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_23(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_22(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_24(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_23(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_25(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_24(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_26(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_25(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_27(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_26(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_28(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_27(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_29(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_28(assertf, func1, func2, result_cmp, __VA_ARGS__)
-#define _FOR_EACH_ASSERT_MULTI_30(assertf, func1, func2, result_cmp, x, ...) assertf(func1 x, func2 x, result_cmp); _FOR_EACH_ASSERT_MULTI_29(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, result_cmp, x) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); 
+#define _FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_1(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_2(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_3(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_4(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_5(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_6(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_7(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_9(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_8(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_10(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_9(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_11(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_10(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_12(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_11(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_13(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_12(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_14(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_13(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_15(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_14(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_16(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_15(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_17(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_16(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_18(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_17(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_19(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_18(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_20(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_19(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_21(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_20(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_22(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_21(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_23(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_22(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_24(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_23(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_25(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_24(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_26(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_25(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_27(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_26(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_28(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_27(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_29(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_28(assertf, func1, func2, result_cmp, __VA_ARGS__)
+#define _FOR_EACH_ASSERT_MULTI_30(assertf, func1, func2, result_cmp, x, ...) ASSERT_TEST_MULTI(assertf, func1, func2, result_cmp, x); _FOR_EACH_ASSERT_MULTI_29(assertf, func1, func2, result_cmp, __VA_ARGS__)
 
 
 #define __ARGS(...) __VA_ARGS__
@@ -265,230 +330,109 @@
 
 #include ".config.h"
 
+
+
+
 #define GET(n, ...) GET_##n(__VA_ARGS__)
 #define _TO_STR(x) TO_STR(x)
 #define _FOR_EACH_ASSERT_MEM_MULTI_0(result_assert, func1, func2, result_cmp, memassert, narg_pointer)
 #define _FOR_EACH_ASSERT_MEM_MULTI_3(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y) \
-	if (!SHORT) printf("\n--------------------------------------------");\
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)),\
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y)));
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y);
 #define _FOR_EACH_ASSERT_MEM_MULTI_6(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_3(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_9(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_6(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_12(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_9(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_15(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_12(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_18(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_15(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_21(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_18(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_24(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_21(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_27(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_24(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_30(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_27(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_33(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_30(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_36(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_33(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_39(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_36(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_42(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_39(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_45(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_42(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_48(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_45(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_51(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_48(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_54(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_51(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_57(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_54(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_60(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_57(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_63(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_60(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_66(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_63(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_69(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_66(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_72(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_69(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_75(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_72(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_78(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_75(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_81(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_78(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_84(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_81(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_87(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_84(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_90(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_87(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)
 #define _FOR_EACH_ASSERT_MEM_MULTI_93(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y, ...) \
-	if (!SHORT) printf("\n--------------------------------------------"); \
-	result_assert(func1 x, func2 y, result_cmp); \
-	memassert(GET(narg_pointer, __ARGS x), GET(narg_pointer, __ARGS y), memsize, \
-	 TO_STR((func1)) _TO_STR(GET(narg_pointer, __ARGS x)), \
-	 TO_STR((func2)) _TO_STR(GET(narg_pointer, __ARGS y))); \
+	MEM_ASSERT_MULTI(result_assert, func1, func2, result_cmp, memassert, narg_pointer, memsize, x, y); \
 	 _FOR_EACH_ASSERT_MEM_MULTI_90(result_assert, func1, func2, result_cmp, memassert, narg_pointer, __VA_ARGS__)	
 
-#define FE__(fe_name, n, wrap, func1, func2, ...) FE_(fe_name, n, wrap, func1, func2, __VA_ARGS__)
-#define FE_(fe_name, n, wrap, func1, func2, ...) fe_name##n(wrap, func1, func2, __VA_ARGS__)
-#define FOR_EACH(wrap, func1, func2, ...) FE__(_FOR_EACH_, COUNT_ARGS(__VA_ARGS__), wrap, func1, func2, __VA_ARGS__)
-#define FOR_EACH_MULTI(wrap, func1, func2, ...) FE__(_FOR_EACH_MULTI_, COUNT_ARGS(__VA_ARGS__), wrap, func1, func2, __VA_ARGS__)
+#define FE__(fe_name, n, wrap, func1, func2, poly_eq, ...) FE_(fe_name, n, wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define FE_(fe_name, n, wrap, func1, func2, poly_eq, ...) fe_name##n(wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define FOR_EACH(wrap, func1, func2, poly_eq, ...) FE__(_FOR_EACH_, COUNT_ARGS(__VA_ARGS__), wrap, func1, func2, poly_eq, __VA_ARGS__)
+#define FOR_EACH_MULTI(wrap, func1, func2, poly_eq, ...) FE__(_FOR_EACH_MULTI_, COUNT_ARGS(__VA_ARGS__), wrap, func1, func2, poly_eq, __VA_ARGS__)
 
 #define FEA_(fe_name, n, result_assert, func1, func2, result_cmp, ...) fe_name##n(result_assert, func1, func2, result_cmp, __VA_ARGS__)
 #define FEA__(fe_name, n, result_assert, func1, func2, result_cmp, ...) FEA_(fe_name, n, result_assert, func1, func2, result_cmp, __VA_ARGS__)
