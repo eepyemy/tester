@@ -77,4 +77,5 @@ if make .testp > /dev/null ; then
 	echo "Running tests"
 	printf "$DEFAULT"
 	./.testp "$@"
+	make clean > /dev/null
 fi

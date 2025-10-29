@@ -59,3 +59,6 @@ $(NAME): ../Makefile
 
 preproc: $(TEST)
 	$(CC) $(CFLAGS) -E $<
+
+clean:
+	rm $(TESTP)
